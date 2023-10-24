@@ -1,0 +1,302 @@
+<b:if cond='data:view.isPost'>
+                  <!--[ Sidebar content ]-->
+                  <b:tag class='blogItm sidebar' name='aside'>
+                    <b:tag class='sideIn' name='div'>
+                      <b:section id='side-widget' showaddelement='true'>
+                        <b:widget id='PopularPosts00' locked='false' title='Popular Posts' type='PopularPosts' version='2' visible='true'>
+                          <b:widget-settings>
+                            <b:widget-setting name='numItemsToShow'>5</b:widget-setting>
+                            <b:widget-setting name='showThumbnails'>true</b:widget-setting>
+                            <b:widget-setting name='showSnippets'>true</b:widget-setting>
+                            <b:widget-setting name='timeRange'>LAST_MONTH</b:widget-setting>
+                          </b:widget-settings>
+                          <b:includable id='main' var='this'>
+                            <b:if cond='data:title != &quot;&quot;'>
+                              <h2 class='title dt'><data:title/></h2>
+                            </b:if>
+                            <b:include name='snippetedPosts'/>
+                          </b:includable>
+                          <b:includable id='blogThisShare'/>
+                          <b:includable id='bylineByName' var='byline'/>
+                          <b:includable id='bylineRegion' var='regionItms'/>
+                          <b:includable id='commentsLink'/>
+                          <b:includable id='commentsLinkIframe'/>
+                          <b:includable id='emailPostIcon'/>
+                          <b:includable id='facebookShare'/>
+                          <b:includable id='footerBylines'/>
+                          <b:includable id='googlePlusShare'/>
+                          <b:includable id='headerByline'/>
+                          <b:includable id='linkShare'/>
+                          <b:includable id='otherSharingButton'/>
+                          <b:includable id='platformShare'/>
+                          <b:includable id='postAuthor'/>
+                          <b:includable id='postCommentsLink'/>
+                          <b:includable id='postInfo'>
+                            <div class='iInf pSml'>
+                              <b:if cond='data:post.labels any (label =&gt; label.name in [ &quot;Sponsored&quot; ])'>
+                                <b:include name='postLabelSponsored'/>
+                                <b:else/>
+                                
+                                <b:include cond='data:post.labels' name='postLabel'/>
+                              </b:if>
+                            </div>
+                          </b:includable>
+                          <b:includable id='postJumpLink' var='post'/>
+                          <b:includable id='postLabels'/>
+                          <b:includable id='postLocation'/>
+                          <b:includable id='postReactions'/>
+                          <b:includable id='postShareButtons'/>
+                          <b:includable id='postTimestamp'>
+                            <time class='aTtmp pbl notranslate timeA' expr:data-text='format(data:post.date, &quot;MMM d&quot;)' expr:datetime='data:post.date.iso8601' expr:title='&quot;Published: &quot; + data:post.date format &quot;MMMM d, YYYY&quot;'/>
+                          </b:includable>
+                          <b:includable id='sharingButton'/>
+                          <b:includable id='sharingButtonContent'/>
+                          <b:includable id='sharingButtons'/>
+                          <b:includable id='sharingButtonsMenu'/>
+                          <b:includable id='sharingPlatformIcon'/>
+                          <b:includable id='snippetedPostByline'/>
+                          <b:includable id='snippetedPostContent'>
+                            <!--[ Post thumbnail ]-->
+                            <b:include cond='data:i == 0 and (data:this.postDisplay.showFeaturedImage and data:post.featuredImage)' name='snippetedPostThumbnail'/>
+                      
+                            <b:include name='postInfo'/>
+                              
+                            <div class='iCtnt'>
+                              <div class='iInr'>
+                                <b:include cond='data:this.postDisplay.showTitle' name='snippetedPostTitle'/>
+                                
+                                <div class='acnP'>
+                                  <bdi class='acmN' expr:data-text='data:post.author.name'><data:post.author.name/></bdi>
+                                  <b:include cond='data:widgets.Blog.first.allBylineItems.timestamp and data:post.labels none (label =&gt; label.name in [ &quot;Product&quot; ])' name='postTimestamp'/>
+                                </div>
+                              </div>
+                            </div>
+                          </b:includable>
+                          <b:includable id='snippetedPostEntry'>
+                            <!--<div class='pSnpt'>
+                              <b:class cond='data:post.labels any (label =&gt; label.name in [ &quot;Product&quot; ])' name='nTag'/>
+                              <b:include name='postEntrySnippet'/>
+                            </div>-->
+                          </b:includable>
+                          <b:includable id='snippetedPostThumbnail'>
+                            <div class='iThmb pThmb'>
+                              <b:class cond='data:post.featuredImage.isYoutube' name='iyt'/>
+                              <b:class cond='!data:this.postDisplay.showFeaturedImage or !data:post.featuredImage' name='nul'/>
+                              <b:tag class='thmb' expr:name='data:this.postDisplay.showFeaturedImage and data:post.featuredImage ? &quot;a&quot; : &quot;div&quot;'>
+                                <b:attr cond='data:this.postDisplay.showFeaturedImage and data:post.featuredImage' expr:value='data:post.url' name='href'/>
+                                <b:if cond='data:this.postDisplay.showFeaturedImage and data:post.featuredImage'>
+                                  <b:include name='postEntryThumbnail'/>
+                                  <b:else/>
+                                  <span class='imgThm' data-text='No image'/>
+                                </b:if>
+                              </b:tag>
+                              
+                              <!--[ Comments count ]-->
+                              <div class='iFxd'>
+                                <b:if cond='data:post.allowComments and data:post.numberOfComments &gt; 0 or data:post.labels any (label =&gt; label.name in [ &quot;Sponsored&quot; , &quot;Product&quot; ])' name='div'>
+                                  <b:if cond='data:post.labels any (label =&gt; label.name in [ &quot;Sponsored&quot; ])'>
+                                    <b:include name='postSponsored'/>
+                                    <b:elseif cond='data:post.labels any (label =&gt; label.name in [ &quot;Product&quot; ])'/>
+                                    <b:include name='postProduct'/>
+                                  </b:if>
+                                  <b:if cond='data:widgets.Blog.first.allBylineItems.comments and data:post.labels none (label =&gt; label.name in [ &quot;Product&quot; ])'>
+                                    <b:include name='postCommentsLinks'/>
+                                  </b:if>
+                                </b:if>
+                            
+                                <!--[ Post Views ]-->
+                                <span class='pV hidden pu-views' expr:data-id='data:post.id'><b:include name='eye-icon'/></span>
+                                
+                                <!--[ Post Bookmark ]-->
+                                <b:include name='thmb-bookmark'/>
+                              </div>
+                            </div>
+                          </b:includable>
+                          <b:includable id='snippetedPostTitle'>
+                            <h3 class='iTtl aTtl'><a expr:href='data:post.url.canonical'><data:post.title.escaped/></a></h3>
+                          </b:includable>
+                          <b:includable id='snippetedPosts'>
+                            <div class='itemPp' role='feed'>
+                              <!-- Don't render the post that we're currently already looking at. -->
+                              <b:loop index='i' values='data:posts filter (p =&gt; p.id != data:view.postId)' var='post'>
+                                <article class='itm'>
+                                  <b:class cond='data:i == 0 and data:this.postDisplay.showFeaturedImage and !data:post.featuredImage' name='nThmb'/>
+                                  <b:class cond='data:i == 0 and data:this.postDisplay.showFeaturedImage and data:post.featuredImage' name='mostP'/>
+                                  <b:class cond='data:post.labels any (label =&gt; label.name in [ &quot;Product&quot; ])' name='pTag'/>
+                                  <b:include name='snippetedPostContent'/>
+                                </article>
+                              </b:loop>
+                            </div>
+                          </b:includable>
+                        </b:widget>
+                        <b:widget id='Label00' locked='false' title='Labels' type='Label' version='2' visible='true'>
+                          <b:widget-settings>
+                            <b:widget-setting name='sorting'>ALPHA</b:widget-setting>
+                            <b:widget-setting name='display'>LIST</b:widget-setting>
+                            <b:widget-setting name='selectedLabelsList'/>
+                            <b:widget-setting name='showType'>ALL</b:widget-setting>
+                            <b:widget-setting name='showFreqNumbers'>true</b:widget-setting>
+                          </b:widget-settings>
+                          <b:includable id='main' var='this'>
+                            <b:if cond='data:title != &quot;&quot;'>
+                              <h2 class='title dt'><data:title/></h2>
+                            </b:if>
+                            <b:include name='content'/>
+                          </b:includable>
+                          <b:includable id='cloud'>
+                            <b:loop index='tags' values='data:labels' var='label'>
+                         
+                              <!--[ Only show 8 label ]-->
+                              <b:if cond='data:tags &lt;= 7'>
+                                <div class='lbSz'>
+                                  <b:class expr:name='&quot;s-&quot; + data:label.cssSize'/>
+                                  <b:tag class='lbN' expr:name='data:blog.url != data:label.url ? &quot;a&quot; : &quot;div&quot;'>
+                                    <b:attr cond='data:blog.url != data:label.url' expr:value='data:label.url' name='href'/>
+                                    <b:attr cond='data:blog.url != data:label.url' expr:value='data:label.name' name='aria-label'/>
+                                    <span class='lbT'><data:label.name/></span>
+                                    <b:tag class='lbC' cond='data:this.showFreqNumbers' expr:data-text='&quot;(&quot; + data:label.count + &quot;)&quot;' name='span'/>
+                                  </b:tag>
+                                </div>
+                              </b:if>
+                        
+                              <!--[ Hide another label from 9th list ]-->
+                              <b:if cond='data:tags == 8'>
+                                <div class='lbSh'>
+                                  <input class='lbIn hidden' id='lbAl-1' type='checkbox'/>
+                                  <div class='lbAl'>
+                                    <b:loop index='alltags' values='data:labels' var='label'>
+                               
+                                      <!--[ Show label from 9th list ]-->
+                                      <b:if cond='data:alltags &gt;= 8'>
+                                        <div class='lbSz'>
+                                          <b:class expr:name='&quot;s-&quot; + data:label.cssSize'/>
+                                          <b:tag class='lbN' expr:name='data:blog.url != data:label.url ? &quot;a&quot; : &quot;div&quot;'>
+                                            <b:attr cond='data:blog.url != data:label.url' expr:value='data:label.url' name='href'/>
+                                            <b:attr cond='data:blog.url != data:label.url' expr:value='data:label.name' name='aria-label'/>
+                                            <span class='lbT'><data:label.name/></span>
+                                            <b:tag class='lbC' cond='data:this.showFreqNumbers' expr:data-text='&quot;(&quot; + data:label.count + &quot;)&quot;' name='span'/>
+                                          </b:tag>
+                                        </div>
+                                      </b:if>
+                                
+                                    </b:loop>
+                                  </div>
+                            
+                                  <label aria-label='Show labels' class='lbM' expr:data-hide='data:messages.showLess' expr:data-show='data:messages.showMore' expr:data-text='&quot;(+&quot; + (data:labels.length - 8) + &quot;)&quot;' for='lbAl-1'/>
+                                </div>
+                              </b:if>
+                            </b:loop>
+                          </b:includable>
+                          <b:includable id='content'>
+                            <div class='wL pSml'>
+                              <!--[ delete the comment tag below if you want to change style Label List ]-->
+                              <b:class name='bg'/>
+                                
+                              <b:class expr:name='data:this.display == &quot;list&quot; ? &quot;ls&quot; : &quot;cl&quot;'/>
+                              <b:include cond='data:this.display == &quot;list&quot;' name='list'/>
+                              <b:include cond='data:this.display == &quot;cloud&quot;' name='cloud'/>
+                            </div>
+                          </b:includable>
+                          <b:includable id='list'>
+                            <ul>
+                              <b:loop index='tags' values='data:labels' var='label'>
+                              
+                                <!--[ Only show 8 label ]-->
+                                <b:if cond='data:tags &lt;= 7'>
+                                  <li>
+                                    <b:tag class='lbN' expr:name='data:blog.url != data:label.url ? &quot;a&quot; : &quot;div&quot;'>
+                                      <b:attr cond='data:blog.url != data:label.url' expr:value='data:label.url' name='href'/>
+                                      <b:attr cond='data:blog.url != data:label.url' expr:value='data:label.name' name='aria-label'/>
+                                      <span class='lbT'><data:label.name/></span>
+                                      <span class='lbR'>
+                                        <b:tag class='lbC' cond='data:this.showFreqNumbers' expr:data-text='data:label.count' name='span'/>
+                                        <b:include name='bookmark-icon'/>
+                                      </span>
+                                    </b:tag>
+                                  </li>
+                                </b:if>
+                          
+                              </b:loop>
+                            </ul>
+                              
+                            <b:loop index='tags' values='data:labels' var='label'>
+                              <!--[ Hide another label from 9th list ]-->
+                              <b:if cond='data:tags == 8'>
+                                <div class='lbSh'>
+                                  <input class='lbIn hidden' id='lbAl-2' type='checkbox'/>
+                                  <ul class='lbAl'>
+                                    <b:loop index='alltags' values='data:labels' var='label'>
+                                      
+                                      <!--[ Show label from 9th list ]-->
+                                      <b:if cond='data:alltags &gt;= 8'>
+                                        <li>
+                                          <b:tag class='lbN' expr:name='data:blog.url != data:label.url ? &quot;a&quot; : &quot;div&quot;'>
+                                            <b:attr cond='data:blog.url != data:label.url' expr:value='data:label.url' name='href'/>
+                                            <b:attr cond='data:blog.url != data:label.url' expr:value='data:label.name' name='aria-label'/>
+                                            <span class='lbT'><data:label.name/></span>
+                                            <span class='lbR'>
+                                              <b:tag class='lbC' cond='data:this.showFreqNumbers' expr:data-text='data:label.count' name='span'/>
+                                              <b:include name='bookmark-icon'/>
+                                            </span>
+                                          </b:tag>
+                                        </li>
+                                      </b:if>
+                                  
+                                    </b:loop>
+                                  </ul>
+                              
+                                  <label aria-label='Show labels' class='lbM' expr:data-hide='data:messages.showLess' expr:data-show='data:messages.showMore' expr:data-text='&quot;(+&quot; + (data:labels.length - 6) + &quot;)&quot;' for='lbAl-2' role='button'/>
+                                </div>
+                              </b:if>
+                            </b:loop>
+                          </b:includable>
+                        </b:widget>
+                        <b:widget id='HTML11' locked='false' title='Table of contents' type='HTML' version='2' visible='true'>
+                          <b:widget-settings>
+                            <b:widget-setting name='content'><![CDATA[<!--[ This is an automatic Table of Content feature that only appears on post pages ]-->]]></b:widget-setting>
+                          </b:widget-settings>
+                          <b:includable id='main'>
+                            <input class='tocI hidden' id='forTocJs' type='checkbox'/>
+                            <div class='tocL'>
+                              <div class='tocLi'>
+                                <div class='tocLs'>
+                                  <label aria-label='Close' class='tocH fixH' for='forTocJs'>
+                                    <div class='tocC'>
+                                      <svg class='rad' viewBox='0 0 160 160'><path d='M0-10,150,0l10,150S137.643,80.734,100.143,43.234,0-10,0-10Z' transform='translate(0 10)'/></svg>
+                                      <span><b:include name='document-icon'/></span>
+                                      <svg class='rad in' viewBox='0 0 160 160'><path d='M0-10,150,0l10,150S137.643,80.734,100.143,43.234,0-10,0-10Z' transform='translate(0 10)'/></svg>
+                                    </div>
+                                    <div class='tocT fixT'>
+                                      <b:attr expr:value='data:title != &quot;&quot; ? data:title : &quot;Contents&quot;' name='data-text'/>
+                                      <span class='c cl' data-texxt='Close'/>
+                                    </div>
+                                  </label>
+                                  <div class='tocIn' id='postToc'/>
+                                </div>
+                              </div>
+                              <label class='fCls' for='forTocJs'/>
+                            </div>
+                          </b:includable>
+                        </b:widget>
+                      </b:section>
+              
+                      <!--[ Sidebar sticky ]-->
+                      <b:section class='sideSticky' cond='data:view.isLayoutMode or (!data:view.isPreview and !data:blog.isMobileRequest)' id='side-Sticky' showaddelement='true'>
+                        <b:widget id='HTML95' locked='true' title='Sticky Ad - Desktop only' type='HTML' version='2' visible='true'>
+                          <b:widget-settings>
+                            <b:widget-setting name='content'/>
+                          </b:widget-settings>
+                          <b:includable id='main'>
+                            <b:if cond='data:content != &quot;&quot;'>
+                              <data:content/>
+                          
+                              <b:else/>
+                              <!--[ Blank ad ]-->
+                              <div class='adB h240' expr:data-text='data:messages.adsGoHere + &quot; (&quot; + data:title + &quot;)&quot;'/>
+                            </b:if>
+                          </b:includable>
+                        </b:widget>
+                      </b:section>
+                    </b:tag>
+                  </b:tag>
+                </b:if>
